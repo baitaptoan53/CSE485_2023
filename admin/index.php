@@ -1,3 +1,11 @@
+<?php
+
+$sql_count_user = "SELECT COUNT(*) FROM users";
+$sql_count_theloai = "SELECT COUNT(*) FROM theloai";
+$sql_count_tacgia = "SELECT COUNT(*) FROM tacgia";
+$sql_count_baihat = "SELECT COUNT(*) FROM baiviet";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
