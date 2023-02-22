@@ -7,6 +7,7 @@
     <title>Music for Life</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
+   
 </head>
 <body>
     <header>
@@ -72,18 +73,20 @@
                     <img src="images/songs/cayvagio.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center">
-                            <a href="" class="text-decoration-none">Cây, lá và gió</a>
+                            <a class="text-decoration-none" href="detail.php">Cây, lá và gió</a>
                         </h5>
+                        
                     </div>
                 </div>
             </div>
+           
 
             <div class="col-sm-3">
                 <div class="card mb-2" style="width: 100%;">
                     <img src="images/songs/csmt.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center">
-                            <a href="" class="text-decoration-none">Cuộc sống mến thương</a>
+                            <a href="csmt.php" class="text-decoration-none">Cuộc sống mến thương</a>
                         </h5>
                     </div>
                 </div>
@@ -94,7 +97,7 @@
                     <img src="images/songs//longme.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center">
-                            <a href="" class="text-decoration-none">Lòng mẹ</a>
+                            <a href="LongMe.php" class="text-decoration-none">Lòng mẹ</a>
                         </h5>
                     </div>
                 </div>
@@ -105,7 +108,7 @@
                     <img src="images/songs/phoipha.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center">
-                            <a href="" class="text-decoration-none">Phôi pha</a>
+                            <a href="PhoiPha.php" class="text-decoration-none">Phôi pha</a>
                         </h5>
                     </div>
                 </div>
@@ -116,7 +119,7 @@
                     <img src="images/songs/noitinhyeubatdau.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center my-title">
-                            <a href="" class="text-decoration-none">Nơi tình yêu bắt đầu</a>
+                            <a href="Love.php" class="text-decoration-none">Nơi tình yêu bắt đầu</a>
                         </h5>
                     </div>
                 </div>
@@ -126,6 +129,7 @@
     <footer class="bg-white d-flex justify-content-center align-items-center border-top border-secondary  border-2" style="height:80px">
         <h4 class="text-center text-uppercase fw-bold">TLU's music garden</h4>
     </footer>
+   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>
