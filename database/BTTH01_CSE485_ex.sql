@@ -154,8 +154,8 @@ CREATE VIEW vw_Music AS SELECT baiviet.ma_bviet, baiviet.ten_bhat, baiviet.ten_t
 
 -- Bổ sung thêm bảng Users để lưu thông tin Tài khoản đăng nhập và sử dụng cho chức năng Đăng nhập/Quản trị trang web.
 CREATE TABLE `users` (
-  `user_id` int(5) NOT NULL,
-  `user_name` varchar(50) NOT NULL,
-  `user_pass` varchar(50) NOT NULL,
-`user_level` int(1) DEFAULT '0';
+  `id` int(5) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `pass` varchar(50) NOT NULL,
+`level` int(1) DEFAULT '0';
 )                  
