@@ -142,3 +142,6 @@ baiviet ON theloai.ma_tloai = baiviet.ma_tloai GROUP BY theloai.ten_tloai ORDER 
 -- Liệt kê 2 tác giả có số bài viết nhiều nhất 
 "SELECT tacgia.ten_tgia, COUNT(baiviet.ma_bviet) AS 'So_bai_viet' 
 FROM tacgia INNER JOIN baiviet ON tacgia.ma_tgia = baiviet.ma_tgia GROUP BY tacgia.ten_tgia ORDER BY COUNT(baiviet.ma_bviet) DESC LIMIT 2"
+--Liệt kê các bài viết về các bài hát có tựa bài hát chứa 1 trong các từ “yêu”, “thương”, “anh”,“em"
+"SELECT baiviet.ma_bviet, baiviet.ten_bhat, baiviet.ten_tgia, baiviet.ngayviet, baiviet.hinhanh, 
+baiviet.tomtat, baiviet.noidung, baiviet.ma_tloai FROM baiviet WHERE baiviet.ten_bhat LIKE '%yêu%' OR baiviet.ten_bhat LIKE '%thương%' OR baiviet.ten_bhat LIKE '%anh%' OR baiviet.ten_bhat LIKE '%em%'"
