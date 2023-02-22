@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,29 +44,29 @@
                         </li>
                     </ul>
 
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./">Trang chủ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.php">Trang ngoài</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active fw-bold" href="category.php">Thể loại</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="author.php">Tác giả</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="article.php">Bài viết</a>
-                    </li>
-                </ul>
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="./">Trang chủ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../index.php">Trang ngoài</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active fw-bold" href="category.php">Thể loại</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="author.php">Tác giả</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="article.php">Bài viết</a>
+                            </li>
+                        </ul>
 
+                    </div>
                 </div>
-            </div>
         </nav>
 
     </header>
@@ -85,7 +83,7 @@
                             <input type="text" class="form-control" name="ten_tloai">
                         </div>
                         <div class="form-group  float-end ">
-                            <input type="submit" value="Thêm" class="btn btn-success" >
+                            <input type="submit" value="Thêm" class="btn btn-success">
                             <a href="category.php" class="btn btn-warning ">Quay lại</a>
                         </div>
                     </form>
@@ -99,7 +97,7 @@
                 <form action="process_add_category.php" method="post">
                     <div class="input-group mt-3 mb-3">
                         <span class="input-group-text" id="lblCatName">Tên thể loại</span>
-                        <input type="text" class="form-control" name="txtCatName" >
+                        <input type="text" class="form-control" name="txtCatName">
                     </div>
 
                     <div class="form-group  float-end ">
@@ -121,10 +119,4 @@
 </html>
 <?php
 require 'connection.php';
-$ten_tloai = $_POST['ten_tloai'];
-$sql_add_ten_tloai="INSERT INTO theloai(ten_tloai) VALUES ( '$ten_tloai')";
-$pdo->exec($sql_add_ten_tloai);
 ?>
-
-</html>
-
