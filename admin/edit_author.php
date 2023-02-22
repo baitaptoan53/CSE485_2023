@@ -1,12 +1,20 @@
-
 <?php
 require 'connection.php';
-$sql = "SELECT * FROM tacgia";
-$statement = $pdo->query($sql);           // Execute
-$statement->setFetchMode(PDO::FETCH_OBJ); // Fetch mode
-$members   = $statement->fetchAll();      // Get data
-?>
+$id = $_GET['id'];
+$sql_ten_tgia = "SELECT tacgia FROM tacgia WHERE ma_tgia = $id";
+$stmt_ten_tloai = $pdo->prepare($sql_ten_tloai);
+$stmt_ten_tloai->execute();
+$ten_tloai = $stmt_ten_tloai->fetchColumn();
+$sql_update = "UPDATE theloai SET ten_tloai = ten_tloai WHERE ma_tloai = $id";
+if (isset($_POST['txtCatName'])) {
+    $ten_tloai = $_POST['txtCatName'];
+    $sql_update = "UPDATE theloai SET ten_tloai = '$ten_tloai' WHERE ma_tloai = $id";
+    $stmt_update = $pdo->prepare($sql_update);
+    $stmt_update->execute();
+    header('location: category.php');
+}
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,10 +45,10 @@ $members   = $statement->fetchAll();      // Get data
                         <a class="nav-link" href="../index.php">Trang ngoài</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="category.php">Thể loại</a>
+                        <a class="nav-link active fw-bold" href="category.php">Thể loại</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active fw-bold" href="author.php">Tác giả</a>
+                        <a class="nav-link" href="author.php">Tác giả</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="article.php">Bài viết</a>
@@ -52,38 +60,29 @@ $members   = $statement->fetchAll();      // Get data
 
     </header>
     <main class="container mt-5 mb-5">
-        <!-- <h3 class="text-center text-uppercase mb-3 text-primary">CẢM NHẬN VỀ BÀI HÁT</h3> -->
         <div class="row">
             <div class="col-sm">
-                <a href="add_category.php" class="btn btn-success">Thêm mới</a>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Tên tác giả</th>
-                                       <th scope="col">Hình ảnh</th>
-                            <th>Sửa</th>
-                            <th>Xóa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            foreach ($members as $member) {
-                                echo "<tr>";
-                                echo "<th scope='row'>$member->ma_tgia</th>";
-                                echo "<td>$member->ten_tgia</td>";
-                                if ($member->hinh_tgia == null) {
-                                    echo "<td><img src='https://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=identicon' alt=''></td>";
-                                } else {
-                                    echo "<td><img src='$member->hinh_tgia' alt=''></td>";
-                                }
-                                echo "<td><a href='edit_author.php?id=$member->ma_tgia' class='btn btn-primary'><i class='fas fa-edit'></i></a></td>";
-                                echo "<td><a href='delete_category.php?id=$member->ma_tgia' class='btn btn-danger'><i class='fas fa-trash-alt'></i></a></td>";
-                                echo "</tr>";
-                            }
-                        ?>
-                    </tbody>
-                </table>
+                <h3 class="text-center text-uppercase fw-bold">Sửa thông tin tác giả</h3>
+                <form action="edit_category.php" method="post">
+                <div class="input-group mt-3 mb-3">
+                        <span class="input-group-text" id="lblCatId">Mã tác giả</span>
+                        <input type="text" class="form-control" name="txtCatId" readonly  value="<?php echo $_GET['id']; 
+                        ?>">
+                    </div>
+
+                    <div class="input-group mt-3 mb-3">
+                        <span class="input-group-text" id="lblCatName">Tên tác giả</span>
+                        <input type="text" class="form-control" name="txtCatName" value="<?php echo $ten_tloai ?>">
+                    </div>
+                    <div class="input-group mt-3 mb-3">
+                        <span class="input-group-text" id="lblCatName">Hình ảnh</span>
+                        <input type="text" class="form-control" name="txtCatName" value="<?php echo $ten_tloai ?>">
+                    </div>
+                    <div class="form-group  float-end ">
+                        <input type="submit" value="Lưu lại" class="btn btn-success">
+                        <a href="category.php" class="btn btn-warning ">Quay lại</a>
+                    </div>
+                </form>
             </div>
         </div>
     </main>

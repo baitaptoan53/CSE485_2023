@@ -1,4 +1,5 @@
 <?php
+require 'connection.php';
 $id = $_GET['id'];
 var_dump($id);
 $sql_update = "UPDATE theloai SET ten_tloai = ten_tloai WHERE ma_tloai = $id";
