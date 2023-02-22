@@ -24,14 +24,12 @@ try {                                                               // Try follo
 $sql_count_user = "SELECT COUNT(*) FROM users";
 $sql_count_theloai = "SELECT COUNT(*) FROM theloai";
 $sql_count_tacgia = "SELECT COUNT(*) FROM tacgia";
-$sql_count_baihat = "SELECT COUNT(*) FROM baiviet";
+$sql_count_baiviet = "SELECT COUNT(*) FROM baiviet";
 
-// thuc thi cau lenh
 $stmt_count_user = $pdo->prepare($sql_count_user);
 $stmt_count_theloai = $pdo->prepare($sql_count_theloai);
 $stmt_count_tacgia = $pdo->prepare($sql_count_tacgia);
-$stmt_count_baihat = $pdo->prepare($sql_count_baihat);
-count user,theloai,,tac,gia
+$stmt_count_baiviet = $pdo->prepare($sql_count_baiviet);
 
 
 ?>
