@@ -1,4 +1,5 @@
 <?php
+
 // ket noi database
 $type     = 'mysql';                 // Type of database
 $server   = 'localhost';             // Server the database is on
@@ -32,9 +33,18 @@ $stmt_count_tacgia = $pdo->prepare($sql_count_tacgia);
 $stmt_count_baiviet = $pdo->prepare($sql_count_baiviet);
 
 
+
+$sql_count_user = "SELECT COUNT(*) FROM users";
+$sql_count_theloai = "SELECT COUNT(*) FROM theloai";
+$sql_count_tacgia = "SELECT COUNT(*) FROM tacgia";
+$sql_count_baihat = "SELECT COUNT(*) FROM baiviet";
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
+
 
 <head>
     <meta charset="UTF-8">
@@ -54,6 +64,7 @@ $stmt_count_baiviet = $pdo->prepare($sql_count_baiviet);
                     <a class="navbar-brand" href="#">Administration</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -74,6 +85,28 @@ $stmt_count_baiviet = $pdo->prepare($sql_count_baiviet);
                             <a class="nav-link" href="article.php">Bài viết</a>
                         </li>
                     </ul>
+
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold" aria-current="page" href="./">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.php">Trang ngoài</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="category.php">Thể loại</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="author.php">Tác giả</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="article.php">Bài viết</a>
+                    </li>
+                </ul>
+
                 </div>
             </div>
         </nav>
@@ -88,12 +121,18 @@ $stmt_count_baiviet = $pdo->prepare($sql_count_baiviet);
                         <h5 class="card-title text-center">
                             <a href="" class="text-decoration-none">Người dùng</a>
                         </h5>
+
                         <h5 class="h1 text-center">
                             <?php
                             $stmt_count_user->execute();
                             $count_user = $stmt_count_user->fetchColumn();
                             echo $count_user;
                             ?>
+
+
+                        <h5 class="h1 text-center">
+                            110
+
                         </h5>
                     </div>
                 </div>
@@ -107,11 +146,15 @@ $stmt_count_baiviet = $pdo->prepare($sql_count_baiviet);
                         </h5>
 
                         <h5 class="h1 text-center">
+
                             <?php
                             $stmt_count_theloai->execute();
                             $count_theloai = $stmt_count_theloai->fetchColumn();
                             echo $count_theloai;
                             ?>
+
+                            10
+
                         </h5>
                     </div>
                 </div>
@@ -125,11 +168,15 @@ $stmt_count_baiviet = $pdo->prepare($sql_count_baiviet);
                         </h5>
 
                         <h5 class="h1 text-center">
+
                             <?php
                             $stmt_count_tacgia->execute();
                             $count_tacgia = $stmt_count_tacgia->fetchColumn();
                             echo $count_tacgia;
                             ?>
+
+                            20
+
                         </h5>
                     </div>
                 </div>
@@ -141,12 +188,18 @@ $stmt_count_baiviet = $pdo->prepare($sql_count_baiviet);
                         <h5 class="card-title text-center">
                             <a href="" class="text-decoration-none">Bài viết</a>
                         </h5>
+
                         <h5 class="h1 text-center">
                             <?php
                             $stmt_count_baiviet->execute();
                             $count_baiviet = $stmt_count_baiviet->fetchColumn();
                             echo $count_baiviet;
                             ?>
+
+
+                        <h5 class="h1 text-center">
+                            110
+
                         </h5>
                     </div>
                 </div>
