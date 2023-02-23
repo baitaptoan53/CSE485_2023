@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th2 22, 2023 lúc 07:53 AM
+-- Thời gian đã tạo: Th2 23, 2023 lúc 04:56 AM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.0.19
 
@@ -71,8 +71,8 @@ CREATE TABLE `theloai` (
 CREATE TABLE `users` (
   `user_id` int(5) NOT NULL,
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
-  `level` int(1) DEFAULT '0';
+  `password` varchar(255) NOT NULL,
+  `level` int(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -83,7 +83,9 @@ CREATE TABLE `users` (
 -- Chỉ mục cho bảng `baiviet`
 --
 ALTER TABLE `baiviet`
-  ADD PRIMARY KEY (`ma_bviet`);
+  ADD PRIMARY KEY (`ma_bviet`),
+  ADD KEY `ma_tloai` (`ma_tloai`),
+  ADD KEY `ma_tgia` (`ma_tgia`);
 
 --
 -- Chỉ mục cho bảng `tacgia`
@@ -103,21 +105,16 @@ ALTER TABLE `theloai`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
 
-ALTER TABLE `baiviet`
-  ADD CONSTRAINT `baiviet_ibfk_1` FOREIGN KEY (`ma_tloai`) REFERENCES `theloai` (`ma_tloai`);
+--
+-- Các ràng buộc cho các bảng đã đổ
+--
 
+--
+-- Các ràng buộc cho bảng `baiviet`
+--
 ALTER TABLE `baiviet`
+  ADD CONSTRAINT `baiviet_ibfk_1` FOREIGN KEY (`ma_tloai`) REFERENCES `theloai` (`ma_tloai`),
   ADD CONSTRAINT `baiviet_ibfk_2` FOREIGN KEY (`ma_tgia`) REFERENCES `tacgia` (`ma_tgia`);
-
---
--- AUTO_INCREMENT cho các bảng đã đổ
---
-
---
--- AUTO_INCREMENT cho bảng `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
