@@ -1,7 +1,10 @@
 <?php
-                   require 'connection.php';
-                   $id = $_GET['id'];
-                   $sql = "DELETE FROM theloai WHERE ma_tloai = $id";
-                   $stmt = $pdo->query($sql);
-                   header("location: category.php");
+require 'connection.php';
+$id = $_GET['id'];
+// xóa ma_tloai trong bảng baiviet rồi mới xóa ma_tloai trong bảng theloai
+$sql = "DELETE FROM baiviet WHERE ma_tloai = $id";
+$stmt = $pdo->query($sql);
+$sql = "DELETE FROM theloai WHERE ma_tloai = $id";
+$stmt = $pdo->query($sql);
+header("location: category.php");
 ?>
