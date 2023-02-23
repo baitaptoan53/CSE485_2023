@@ -1,4 +1,3 @@
-
 -- dem so luong ban ghi trong cac bang
 SELECT COUNT(*) FROM users;
 SELECT COUNT(*) FROM theloai;

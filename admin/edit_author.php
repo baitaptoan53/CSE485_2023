@@ -6,14 +6,6 @@ $stmt_ten_tloai = $pdo->prepare($sql_ten_tloai);
 $stmt_ten_tloai->execute();
 $ten_tloai = $stmt_ten_tloai->fetchColumn();
 $sql_update = "UPDATE theloai SET ten_tloai = ten_tloai WHERE ma_tloai = $id";
-if (isset($_POST['txtCatName'])) {
-    $ten_tloai = $_POST['txtCatName'];
-    $sql_update = "UPDATE theloai SET ten_tloai = '$ten_tloai' WHERE ma_tloai = $id";
-    $stmt_update = $pdo->prepare($sql_update);
-    $stmt_update->execute();
-    header('location: category.php');
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,3 +84,12 @@ if (isset($_POST['txtCatName'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>
+<?php
+if (isset($_POST['txtCatName'])) {
+    $ten_tloai = $_POST['txtCatName'];
+    $sql_update = "UPDATE theloai SET ten_tloai = '$ten_tloai' WHERE ma_tloai = $id";
+    $stmt_update = $pdo->prepare($sql_update);
+    $stmt_update->execute();
+    header('location: author.php');
+}
+?>
