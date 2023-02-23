@@ -1,5 +1,22 @@
+<?php
+require 'connection.php';
+$sql_count_user = "SELECT COUNT(*) FROM users";
+$sql_count_theloai = "SELECT COUNT(*) FROM theloai";
+$sql_count_tacgia = "SELECT COUNT(*) FROM tacgia";
+$sql_count_baiviet = "SELECT COUNT(*) FROM baiviet";
+
+$stmt_count_user = $pdo->prepare($sql_count_user);
+$stmt_count_theloai = $pdo->prepare($sql_count_theloai);
+$stmt_count_tacgia = $pdo->prepare($sql_count_tacgia);
+$stmt_count_baiviet = $pdo->prepare($sql_count_baiviet);
+$sql_count_user = "SELECT COUNT(*) FROM users";
+$sql_count_theloai = "SELECT COUNT(*) FROM theloai";
+$sql_count_tacgia = "SELECT COUNT(*) FROM tacgia";
+$sql_count_baihat = "SELECT COUNT(*) FROM baiviet";
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +26,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style_login.css">
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary shadow p-3 bg-white rounded">
@@ -17,30 +35,31 @@
                     <a class="navbar-brand" href="#">Administration</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active fw-bold" aria-current="page" href="./">Trang chủ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.php">Trang ngoài</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="category.php">Thể loại</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="author.php">Tác giả</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="article.php">Bài viết</a>
-                    </li>
-                </ul>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active fw-bold" aria-current="page" href="./">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.php">Trang ngoài</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="category.php">Thể loại</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="author.php">Tác giả</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="article.php">Bài viết</a>
+                        </li>
+                    </ul>
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
                 </div>
-            </div>
         </nav>
-
     </header>
     <main class="container mt-5 mb-5">
         <!-- <h3 class="text-center text-uppercase mb-3 text-primary">CẢM NHẬN VỀ BÀI HÁT</h3> -->
@@ -53,8 +72,11 @@
                         </h5>
 
                         <h5 class="h1 text-center">
-                            110
-                        </h5>
+                            <?php
+                            $stmt_count_user->execute();
+                            $count_user = $stmt_count_user->fetchColumn();
+                            echo $count_user;
+                            ?>
                     </div>
                 </div>
             </div>
@@ -67,7 +89,12 @@
                         </h5>
 
                         <h5 class="h1 text-center">
-                            10
+
+                            <?php
+                            $stmt_count_theloai->execute();
+                            $count_theloai = $stmt_count_theloai->fetchColumn();
+                            echo $count_theloai;
+                            ?>
                         </h5>
                     </div>
                 </div>
@@ -81,7 +108,11 @@
                         </h5>
 
                         <h5 class="h1 text-center">
-                            20
+                            <?php
+                            $stmt_count_tacgia->execute();
+                            $count_tacgia = $stmt_count_tacgia->fetchColumn();
+                            echo $count_tacgia;
+                            ?>
                         </h5>
                     </div>
                 </div>
@@ -95,8 +126,11 @@
                         </h5>
 
                         <h5 class="h1 text-center">
-                            110
-                        </h5>
+                            <?php
+                            $stmt_count_baiviet->execute();
+                            $count_baiviet = $stmt_count_baiviet->fetchColumn();
+                            echo $count_baiviet;
+                            ?>
                     </div>
                 </div>
             </div>
@@ -107,4 +141,5 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
+
 </html>

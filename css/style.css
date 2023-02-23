@@ -28,4 +28,6 @@ body{
 .my-title{
     overflow-y: hidden;
 }
-
+.fixbr{
+    background-color: #dcacdf;
+}
