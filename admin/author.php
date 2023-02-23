@@ -78,7 +78,7 @@ $members   = $statement->fetchAll();      // Get data
                                     echo "<td><img src='$member->hinh_tgia' alt=''></td>";
                                 }
                                 echo "<td><a href='edit_author.php?id=$member->ma_tgia' class='btn btn-primary'><i class='fas fa-edit'></i></a></td>";
-                                echo "<td><a href='delete_category.php?id=$member->ma_tgia' class='btn btn-danger'><i class='fas fa-trash-alt'></i></a></td>";
+                                echo "<td><a href='delete_author.php?id=$member->ma_tgia' class='btn btn-danger'><i class='fas fa-trash-alt'></i></a></td>";
                                 echo "</tr>";
                             }
                         ?>
