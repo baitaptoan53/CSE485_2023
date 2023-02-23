@@ -4,7 +4,6 @@ require 'connection.php';
 $select_ten_bhat = "SELECT ten_bhat FROM baiviet";
 $stmt = $pdo->query($select_ten_bhat);
 $ten_bhat = $stmt->fetchAll(PDO::FETCH_ASSOC);
-var_dump($ten_bhat);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,7 +69,7 @@ var_dump($ten_bhat);
                         <select class="form-control select_ten_bhat">
                                      <?php
                                      foreach ($ten_bhat as $ten_bhat) {
-                                         echo "<option>"$ten_bhat['ten_bhat']"</option>";
+                                                         echo "<option value='" . $ten_bhat['ten_bhat'] . "'>" . $ten_bhat['ten_bhat'] . "</option>";
                                      }
                                      ?>
 </select>
