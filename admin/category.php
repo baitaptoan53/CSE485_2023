@@ -6,7 +6,6 @@ $statement = $pdo->query($sql);           // Execute
 $statement->setFetchMode(PDO::FETCH_OBJ); // Fetch mode
 $members   = $statement->fetchAll();      // Get data
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -63,8 +63,10 @@ $members = $statement->fetchAll();
                             <th scope="col">#</th>
                             <th scope="col">Tiêu đề </th>
                             <th scope="col">Tên bài hát </th>
+                            <th scope="col">Mã thể loại </th>
                             <th scope="col">Tóm tắt </th>
                             <th scope="col">Nội dung </th>
+                            <th scope="col">Mã tác giả </th>
                             <th scope="col">Hình ảnh</th>
                             <th>Sửa</th>
                             <th>Xóa</th>
@@ -78,11 +80,11 @@ $members = $statement->fetchAll();
                             echo "<th scope='row'>$member->ma_bviet</th>";
                             echo "<th scope='row'>$member->tieude</th>";
                             echo "<td>$member->ten_bhat</td>";
-                            //              echo "<td>$member->ma_tloai</td>";
+                            echo "<td>$member->ma_tloai</td>";
                             echo "<td>$member->tomtat</td>";
                             echo "<td>$member->noidung</td>";
                             echo "<td>$member->ma_tgia</td>";
-                            if (is_null($member->hinh_tgia)) {
+                            if ($member->hinhanh==null) {
                                 echo "<td><img src='https://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=identicon' alt=''></td>";
                             } else {
                                 echo "<td><img src='$member->hinhanh' alt=''></td>";
