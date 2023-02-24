@@ -9,90 +9,96 @@
     <title>Music for Life</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/style_login.css">
+    <link href="css/app-creative.min.css" rel="stylesheet" type="text/css" id="light-style" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary shadow p-3 bg-white rounded">
-            <div class="container-fluid">
-                <div class="my-logo">
-                    <a class="navbar-brand" href="#">
-                        <img src="images/logo2.png" alt="" class="img-fluid">
+<body class="authentication-bg pb-0" data-layout-config='{"darkMode":false}'>
+
+<div class="auth-fluid">
+    <!--Auth fluid left content -->
+    <div class="auth-fluid-form-box">
+        <div class="align-items-center d-flex h-100">
+            <div class="card-body">
+
+                <!-- Logo -->
+                <div class="auth-brand text-center text-lg-left">
+                    <a href="index.html" class="logo-dark">
+                        <span><img src="images/logo.png" alt="" height="24"></span>
                     </a>
                 </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="./">Trang chủ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="./login.php">Đăng nhập</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Nội dung cần tìm" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Tìm</button>
-                    </form>
+                <!-- title-->
+                <h4 class="mt-0">Đăng Nhập</h4>
+                <p class="text-muted mb-4">Nhập địa chỉ email và mật khẩu của bạn để truy cập tài khoản.</p>
 
-                </div>
-            </div>
-        </nav>
-
-    </header>
-    <main class="container mt-5 mb-5">
-        <!-- <h3 class="text-center text-uppercase mb-3 text-primary">CẢM NHẬN VỀ BÀI HÁT</h3> -->
-        <div class="d-flex justify-content-center h-100">
-
-            <div class="card">
-                <div class="card-header">
-                    <h3>Sign In</h3>
-                    <div class="d-flex justify-content-end social_icon">
-                        <span><i class="fab fa-facebook-square"></i></span>
-                        <span><i class="fab fa-google-plus-square"></i></span>
-                        <span><i class="fab fa-twitter-square"></i></span>
+                <!-- form -->
+                <form action="#">
+                    <div class="form-group">
+                        <label for="emailaddress">Email</label>
+                        <input class="form-control" type="email" id="emailaddress" required="" placeholder="Nhập email">
                     </div>
-                </div>
-                <div class="card-body">
-                    <!-- them các thuộc tính cho forrm -->
-                    <form  method="POST" enctype="multipart/form-data" name="frmLogin" id="frmLogin">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="txtUser"><i class="fas fa-user"></i></span>
-                            <input type="text" class="form-control" placeholder="username" name="txtUser" id="txtUser">
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="txtPass"><i class="fas fa-key"></i></span>
-                            <input type="text" class="form-control" placeholder="password" name="txtPass" id="txtPass">
-                        </div>
-
-                        <div class="row align-items-center remember">
-                            <input type="checkbox">Remember Me
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Login" class="btn float-end login_btn" name="btnLogin" id="btnLogin">
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-center ">
-                        Don't have an account?<a href="#" class="text-warning text-decoration-none">Sign Up</a>
+                    <div class="form-group">
+                        <a href="pages-recoverpw-2.html" class="text-muted float-right"><small>Bạn quên mật khẩu ?</small></a>
+                        <label for="password">Mật khẩu</label>
+                        <input class="form-control" type="password" required="" id="password" placeholder="Nhập mật khẩu">
                     </div>
-                    <div class="d-flex justify-content-center">
-                        <a href="#" class="text-warning text-decoration-none">Forgot your password?</a>
+                    <div class="form-group mb-3">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="checkbox-signin">
+                            <label class="custom-control-label" for="checkbox-signin">Nhớ tài khoản</label>
+                        </div>
                     </div>
-                </div>
-            </div>
+                    <div class="form-group mb-0 text-center">
+                        <button class="btn btn-primary btn-block" type="submit"><i class="mdi mdi-login"></i> Log In </button>
+                    </div>
+                    <!-- social-->
+                    <div class="text-center mt-4">
+                            <p class="text-muted font-16">Đăng kí với</p>
+                            <ul class="social-list list-inline mt-3">
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i class="fa-brands fa-facebook"></i></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="fa-brands fa-google"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="social-list-item border-info text-info"><i class="fa-brands fa-twitter"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="fa-brands fa-github"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                </form>
+                <!-- end form-->
+
+                <!-- Footer-->
+                <footer class="footer footer-alt">
+                    <p class="text-muted">Don't have an account? <a href="register.php" class="text-muted ml-1"><b>Sign Up</b></a></p>
+                </footer>
+
+            </div> <!-- end .card-body -->
+        </div> <!-- end .align-items-center.d-flex.h-100-->
+    </div>
+    <!-- end auth-fluid-form-box-->
+
+    <!-- Auth fluid right content -->
+    <div class="auth-fluid-right text-center">
+            <div class="auth-user-testimonial">
+                <h2 class="mb-3">Nghe nhạc online mễn phí</h2>
+                <p class="lead"><i class="mdi mdi-format-quote-open"></i>Không lo các quảng cáo giữa chừng làm chúng ta khó chịu .<i class="mdi mdi-format-quote-close"></i>
+                </p>
+                <p>
+                    TLU'S MUSIC GARDEN
+                </p>
+            </div> <!-- end auth-user-testimonial-->
         </div>
-    </main>
-    <footer class="bg-white d-flex justify-content-center align-items-center border-top border-secondary  border-2" style="height:80px">
-        <h4 class="text-center text-uppercase fw-bold">TLU's music garden</h4>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <!-- end Auth fluid right content -->
+</div>
+<!-- end auth-fluid-->
+
+
 </body>
 
 </html>
