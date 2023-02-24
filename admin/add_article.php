@@ -1,11 +1,10 @@
-<?php
-require "connection.php";
-$sql       = "SELECT * FROM baiviet";
-$statement = $pdo->query($sql); // Execute
-$statement->setFetchMode(PDO::FETCH_OBJ); // Fetch mode
-$members = $statement->fetchAll();
-?>
 
+<?php
+require 'connection.php';
+$select_ten_bhat = "SELECT ten_bhat FROM baiviet";
+$stmt = $pdo->query($select_ten_bhat);
+$ten_bhat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +16,7 @@ $members = $statement->fetchAll();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style_login.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -41,69 +41,72 @@ $members = $statement->fetchAll();
                             <a class="nav-link " href="category.php">Thể loại</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="author.php">Tác giả</a>
+                            <a class="nav-link active fw-bold" href="author.php">Tác giả</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active fw-bold" href="article.php">Bài viết</a>
+                            <a class="nav-link" href="article.php">Bài viết</a>
                         </li>
                     </ul>
-                </div>
-            </div>
         </nav>
 
     </header>
     <main class="container mt-5 mb-5">
         <!-- <h3 class="text-center text-uppercase mb-3 text-primary">CẢM NHẬN VỀ BÀI HÁT</h3> -->
-        <div class="row">
-            <div class="col-sm">
-                <a href="add_article.php" class="btn btn-success">Thêm mới</a>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Tiêu đề </th>
-                            <th scope="col">Tên bài hát </th>
-                            <th scope="col">Mã thể loại </th>
-                            <th scope="col">Tóm tắt </th>
-                            <th scope="col">Nội dung </th>
-                            <th scope="col">Mã tác giả </th>
-                            <th scope="col">Hình ảnh</th>
-                            <th>Sửa</th>
-                            <th>Xóa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        ob_start();
-                        foreach ($members as $member) {
-                            echo "<tr>";
-                            echo "<th scope='row'>$member->ma_bviet</th>";
-                            echo "<th scope='row'>$member->tieude</th>";
-                            echo "<td>$member->ten_bhat</td>";
-                            echo "<td>$member->ma_tloai</td>";
-                            echo "<td>$member->tomtat</td>";
-                            echo "<td>$member->noidung</td>";
-                            echo "<td>$member->ma_tgia</td>";
-                            if ($member->hinhanh==null) {
-                                echo "<td><img src='https://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=identicon' alt=''></td>";
-                            } else {
-                                echo "<td><img src='$member->hinhanh' alt=''></td>";
-                            }
-                            echo "<td><a href='edit_article.php?id=$member->ma_bviet' class='btn btn-primary'><i class='fas fa-edit'></i></a></td>";
-                            echo "<td><a href='delete_article.php?id=$member->ma_bviet' class='btn btn-danger'><i class='fas fa-trash-alt'></i></a></td>";
-                            echo "</tr>";
-                        }
-                        ob_end_flush();
-                        ?>
-                    </tbody>
-                </table>
+
+        <form action="add_article.php"  method=POST>
+            <div class="row">
+                <div class="col-sm">
+                    <h3 class="text-center text-uppercase fw-bold">Thêm tác giả mới</h3>
+                    <form action="process_add_category.php" method="post">
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text" id="lblCatName">Tên tác giả</span>
+                            <input type="text" class="form-control" name="ten_tgia">
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text" id="lblCatName">Hình ảnh</span>
+                            <input type="text" class="form-control" name="hinh_tgia">
+                        </div>
+                        <select class="form-control select_ten_bhat">
+                                     <?php
+                                     foreach ($ten_bhat as $ten_bhat) {
+                                                         echo "<option value='" . $ten_bhat['ten_bhat'] . "'>" . $ten_bhat['ten_bhat'] . "</option>";
+                                     }
+                                     ?>
+</select>
+                        <div class="form-group  float-end ">
+                            <input type="submit" value="Thêm" class="btn btn-success">
+                            <a href="category.php" class="btn btn-warning ">Quay lại</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        </form>
+
     </main>
     <footer class="bg-white d-flex justify-content-center align-items-center border-top border-secondary  border-2" style="height:80px">
         <h4 class="text-center text-uppercase fw-bold">TLU's music garden</h4>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+                   $(".select_ten_bhat").select2({
+  tags: true
+});
+</script>
 </html>
+<?php
+require "connection.php";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $ten_tgia = trim($_POST["ten_tgia"]);
+    $hinh_tgia = trim($_POST["hinh_tgia"]);
+    if (empty($ten_tgia)) {
+        echo "<scrip>alearn('Ban chua nhap du noi dung')</scrip>";
+    } else {
+        $sql = "INSERT INTO tacgia(ma_tgia,ten_tgia,hinh_tgia) VALUES('','$ten_tgia','$hinh_tgia')";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        header("location:author.php");
+    }
+}
+?>

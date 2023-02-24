@@ -69,6 +69,11 @@
                             <span class="input-group-text" id="txtPass"><i class="fas fa-key"></i></span>
                             <input type="text" class="form-control" placeholder="password" name="txtPass" id="txtPass">
                         </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="txtPass"><i class="fas fa-key"></i></span>
+                            <input type="text" class="form-control" placeholder="password" name="txtPass" id="txtPass">
+                        </div>
+
 
                         <div class="row align-items-center remember">
                             <input type="checkbox">Remember Me
