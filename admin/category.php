@@ -1,12 +1,3 @@
-
-<?php
-require 'connection.php';
-$sql = "SELECT * FROM theloai";
-$statement = $pdo->query($sql);           // Execute
-$statement->setFetchMode(PDO::FETCH_OBJ); // Fetch mode
-$members   = $statement->fetchAll();      // Get data
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,14 +57,34 @@ $members   = $statement->fetchAll();      // Get data
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            foreach ($members as $member) {
-                                echo "<tr>";
-                                echo "<th scope='row'>$member->ma_tloai</th>";
-                                echo "<td>$member->ten_tloai</td>";
-                                echo "<td><a href='edit_category.php?id=$member->ma_tloai' class='btn btn-primary'><i class='fas fa-edit'></i></a></td>";
-                                echo "<td><a href='delete_category.php?id=$member->ma_tloai' class='btn btn-danger'><i class='fas fa-trash-alt'></i></a></td>";
-                                echo "</tr>";
+                        <?php 
+                            require_once('../connect.class.php');
+                            $params = [
+                                'host' => 'localhost',
+                                'dbname' => 'btth01_cse485',
+                                'post' => '3306',
+                                'username' => 'root',
+                                'password' => '',
+                                'nameTable' => 'theloai'
+                            ];
+                            $pdo = new PDOs($params);
+                            $sql = "SELECT * FROM $pdo->nameTable";
+                            $stmt = $pdo->pdo->prepare($sql);
+                            $stmt->execute();
+                            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                echo 
+                                '
+                                <tr>
+                                    <th scope="row">'.$row['ma_tloai'].'</th>
+                                    <td>'.$row['ten_tloai'].'</td>
+                                    <td>
+                                        <a href="edit_category.php?id='.$row['ma_tloai'].'&tloai='.$row['ten_tloai'].'"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    </td>
+                                    <td>
+                                        <a href="delete.php?id='.$row['ma_tloai'].'"><i class="fa-solid fa-trash"></i></a>
+                                    </td>
+                                 </tr>
+                                ';
                             }
                         ?>
                     </tbody>

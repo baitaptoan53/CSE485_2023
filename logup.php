@@ -50,21 +50,30 @@
                  'nameTable' => 'users'
           ];
           $pdo = new PDOs($params);
-          $userName = $password ="";
+          $userName = $password = $confpassword ="";
           if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            if(!empty($_POST['username'])&& !empty($_POST['password'])){
+            if(!empty($_POST['username'])&& !empty($_POST['password'])&&!empty($_POST['confPassword'])){
                 $userName = trim($_POST['username']);
                 $password = trim($_POST['password']);
-                echo $userName.": ".$password;
-                $sql = "SELECT * FROM $pdo->nameTable WHERE username = ? AND password = ?";
+                $confpassword = trim($_POST['confPassword']);
+
+                $sql = "SELECT COUNT(*) FROM $pdo->nameTable WHERE username = ?";
                 $stmt = $pdo->pdo->prepare($sql);
-                $stmt->execute([$userName,$password]);
+                $stmt->execute([$userName]);
                 $count = $stmt->fetchColumn();
-                if($count==1) {
-                        header('location:./admin/category.php');
+                if($count!=1){
+                    if($password===$confpassword && strlen($password)>=6){
+                        $sql1 = "INSERT INTO $pdo->nameTable(username,password) VALUES ('$userName','$password')";
+                        $stmt1 = $pdo->pdo->prepare($sql1);
+                        $stmt1->execute();
+                        header("location:login.php");
                         die();
+                    }
+                    else{
+                        echo "<script>alert('Mật khẩu không khớp và phải lớn hớn 6 kí tự')</script>";
+                    }
                 }else{
-                    echo "<script>alert('Vui lòng nhậ lại mật khẩu !!')</script>";
+                    echo "<script>alert('Đã có tài khoản này rồi !!')</script>";
                 }
             }
         }
@@ -80,31 +89,29 @@
                             <span><i class="fab fa-twitter-square"></i></span>
                         </div>
                     </div>
-                    <?php
-                     ?>
                     <div class="card-body">
-                        <form method ="post" action="login.php">
+                        <form method ="post" action="logup.php">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="txtUser"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="username" name ="username" >
+                                <input type="text" class="form-control" placeholder="username" name = "username" value="<?=$userName?>">
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="txtPass"><i class="fas fa-key"></i></span>
-                                <input type="passo" class="form-control" placeholder="password" name ="password">
+                                <input type="password" class="form-control" placeholder="password" name ="password">
                             </div>
-                            
-                            <div class="row align-items-center remember">
-                                <input type="checkbox">Remember Me
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="txtPass"><i class="fas fa-key"></i></span>
+                                <input type="password" class="form-control" placeholder="confPassword" name = "confPassword">
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Login" class="btn float-end login_btn">
+                                <input type="submit" value="LogUp" class="btn float-end login_btn">
                             </div>
                         </form>
                     </div>
                     <div class="card-footer">
                         <div class="d-flex justify-content-center ">
-                            Don't have an account?<a href="logup.php" class="text-warning text-decoration-none">Sign Up</a>
+                            Don't have an account?<a href="login.php" class="text-warning text-decoration-none">Sign in</a>
                         </div>
                         <div class="d-flex justify-content-center">
                             <a href="#" class="text-warning text-decoration-none">Forgot your password?</a>
