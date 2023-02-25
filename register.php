@@ -29,14 +29,16 @@
                     <p class="text-muted mb-4">
                         Bạn chưa có tài khoản? Tạo tài khoản của bạn, chỉ mất chưa đầy một phút</p>
                     <!-- form -->
-                    <form action="register.php" method="POST">
+                    <form action="" method="POST">
                         <div class="form-group">
                             <label for="fullname">Tên tài khoản</label>
                             <input class="form-control" type="text" id="usersname" name="usersname" placeholder="Nhập tên tài khoản" required>
+
                         </div>
                         <div class="form-group">
                             <label for="emailaddress">Email</label>
                             <input class="form-control" type="email" id="emailaddress" name="emailaddress" required placeholder="Nhập email email">
+
                         </div>
                         <div class="form-group">
                             <label for="password">Mật khẩu</label>
@@ -97,31 +99,41 @@
     </div>
     <!-- end auth-fluid-->
 </body>
+
 </html>
 <?php
+ob_start();
 require "admin/connection.php";
-
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $usersname = $_POST['usersname'];
-        $email = $_POST['emailaddress'];
-        $password = $_POST['password'];
-        $sql = "SELECT * FROM users WHERE email = '$email'";
-        $stmt = $pdo -> prepare($sql);
-        $stmt -> execute();
-        $count = $stmt -> rowCount();
-        if($count > 0){
-            echo "Email đã tồn tại";
-        }
-        $sql = "SELECT * FROM users WHERE usersname = '$usersname'";
-        $stmt = $pdo -> prepare($sql);
-        $stmt -> execute();
-        $count = $stmt -> rowCount();
-        if($count > 0){
-            echo "Tên tài khoản đã tồn tại";
-        }
-        $sql = "INSERT INTO users (user_id,usersname, email, password) VALUES ('','$usersname', '$email', '$password')";
-        $stmt = $pdo -> prepare($sql);
-        $stmt -> execute();
-        header("location: login.php");
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $error = false;
+    $usersname = $_POST['usersname'];
+    $email = $_POST['emailaddress'];
+    $password = $_POST['password'];
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    // kiểm tra email đã tồn tại chưa
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $count = $stmt->rowCount();
+    if ($count > 0) {
+        echo "<script>alert('Email đã tồn tại!');</script>";
+        return $error = true;
     }
-    ?>
+    // kiểm tra tên tài khoản đã tồn tại chưa
+    $sql = "SELECT * FROM users WHERE usersname = '$usersname'";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $count = $stmt->rowCount();
+    if ($count > 0) {
+        echo "<script>alert('Tên tài khoản đã tồn tại!');</script>";
+        return $error = true;
+    }
+    if ($error == false) {
+        $sql = "INSERT INTO users (user_id,usersname, email, password) VALUES ('','$usersname', '$email', '$password')";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        header("Location: login.php");
+    }
+}
+ob_end_flush();
+?>
