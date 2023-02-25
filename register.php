@@ -1,3 +1,42 @@
+<?php
+$error_email = false;
+$error_username = false;
+?>
+ <?php
+    require "admin/connection.php";
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['usersname']) && isset($_POST['emailaddress']) && isset($_POST['password'])) {
+        $error = false;
+        $usersname = $_POST['usersname'];
+        $email = $_POST['emailaddress'];
+        $password = $_POST['password'];
+        // kiểm tra email đã tồn tại chưa
+        $sql = "SELECT * FROM users WHERE email = '$email'";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        if ($count > 0) {
+            $error = true;
+            $error_email = true;
+        }
+        // kiểm tra tên tài khoản đã tồn tại chưa
+        $sql = "SELECT * FROM users WHERE usersname = '$usersname'";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        if ($count > 0) {
+            $error = true;
+            $error_username = true;
+        }
+        if ($error == false) {
+            $password = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO users (user_id,usersname, email, password) VALUES ('','$usersname', '$email', '$password')";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            header("Location: login.php");
+        }
+    }
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,12 +72,22 @@
                         <div class="form-group">
                             <label for="fullname">Tên tài khoản</label>
                             <input class="form-control" type="text" id="usersname" name="usersname" placeholder="Nhập tên tài khoản" required>
-
+                            <?php
+                            if ($error_username == true) {
+                                echo '<div class="alert alert-danger" role="alert">
+                                 Tên tài khoản bạn vừa nhập đã tồn tại!
+                               </div>';
+                            }
+                            ?>
                         </div>
                         <div class="form-group">
                             <label for="emailaddress">Email</label>
                             <input class="form-control" type="email" id="emailaddress" name="emailaddress" required placeholder="Nhập email email">
-
+                            <?php
+                            if ($error_email == true) {
+                                echo '<div class="alert alert-danger" role="alert"> Email bạn vừa nhập đã tồn tại!</div>';
+                            }
+                            ?>
                         </div>
                         <div class="form-group">
                             <label for="password">Mật khẩu</label>
@@ -53,6 +102,7 @@
                         <div class="form-group mb-0 text-center">
                             <button class="btn btn-primary btn-block" type="submit"><i class="mdi mdi-account-circle"></i> Đăng kí </button>
                         </div>
+
                         <!-- social-->
                         <div class="text-center mt-4">
                             <p class="text-muted font-16">Đăng kí với</p>
@@ -97,43 +147,9 @@
         </div>
         <!-- end Auth fluid right content -->
     </div>
+   
     <!-- end auth-fluid-->
 </body>
 
+
 </html>
-<?php
-ob_start();
-require "admin/connection.php";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $error = false;
-    $usersname = $_POST['usersname'];
-    $email = $_POST['emailaddress'];
-    $password = $_POST['password'];
-    $password = password_hash($password, PASSWORD_DEFAULT);
-    // kiểm tra email đã tồn tại chưa
-    $sql = "SELECT * FROM users WHERE email = '$email'";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $count = $stmt->rowCount();
-    if ($count > 0) {
-        echo "<script>alert('Email đã tồn tại!');</script>";
-        return $error = true;
-    }
-    // kiểm tra tên tài khoản đã tồn tại chưa
-    $sql = "SELECT * FROM users WHERE usersname = '$usersname'";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $count = $stmt->rowCount();
-    if ($count > 0) {
-        echo "<script>alert('Tên tài khoản đã tồn tại!');</script>";
-        return $error = true;
-    }
-    if ($error == false) {
-        $sql = "INSERT INTO users (user_id,usersname, email, password) VALUES ('','$usersname', '$email', '$password')";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        header("Location: login.php");
-    }
-}
-ob_end_flush();
-?>
