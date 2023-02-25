@@ -147,7 +147,6 @@ $error_username = false;
         </div>
         <!-- end Auth fluid right content -->
     </div>
-   
     <!-- end auth-fluid-->
 </body>
 

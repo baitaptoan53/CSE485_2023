@@ -1,10 +1,4 @@
 
-<?php
-require 'connection.php';
-$select_ten_bhat = "SELECT ten_bhat FROM baiviet";
-$stmt = $pdo->query($select_ten_bhat);
-$ten_bhat = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +10,10 @@ $ten_bhat = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style_login.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css' rel='stylesheet' type='text/css'>
+    <!-- Script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js'></script>
 </head>
 
 <body>
@@ -53,7 +50,7 @@ $ten_bhat = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <main class="container mt-5 mb-5">
         <!-- <h3 class="text-center text-uppercase mb-3 text-primary">CẢM NHẬN VỀ BÀI HÁT</h3> -->
 
-        <form action="add_article.php"  method=POST>
+        <form action="add_article.php" method=POST>
             <div class="row">
                 <div class="col-sm">
                     <h3 class="text-center text-uppercase fw-bold">Thêm tác giả mới</h3>
@@ -66,13 +63,14 @@ $ten_bhat = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <span class="input-group-text" id="lblCatName">Hình ảnh</span>
                             <input type="text" class="form-control" name="hinh_tgia">
                         </div>
-                        <select class="form-control select_ten_bhat">
-                                     <?php
-                                     foreach ($ten_bhat as $ten_bhat) {
-                                                         echo "<option value='" . $ten_bhat['ten_bhat'] . "'>" . $ten_bhat['ten_bhat'] . "</option>";
-                                     }
-                                     ?>
-</select>
+                        <label for="portLoading">Port Loading</label>
+                        <select class="form-control" id="portLoading" name="portLoading" style="width: 100%;">
+                            <option value="">Select Port Loading</option>
+                        </select>
+                        <label for="portLoading">Tên thể loại</label>
+                        <select class="form-control" id="ten_tloai" name="ten_tloai" style="width: 100%;">
+                            <option value="">Select tên thể loại</option>
+                        </select>
                         <div class="form-group  float-end ">
                             <input type="submit" value="Thêm" class="btn btn-success">
                             <a href="category.php" class="btn btn-warning ">Quay lại</a>
@@ -90,23 +88,46 @@ $ten_bhat = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </body>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-                   $(".select_ten_bhat").select2({
-  tags: true
-});
+    $(document).ready(function() {
+        $("#portLoading").select2({
+            ajax: {
+                url: "get_data.php",
+                type: "get",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        searchTerm: params.term
+                    };
+                },
+                processResults: function(response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
+        });
+        // $("#ten_tloai").select2({
+        //     ajax: {
+        //         url: "get_ten_tloai.php",
+        //         type: "get",
+        //         dataType: 'json',
+        //         delay: 250,
+        //         data: function(params) {
+        //             return {
+        //                 searchTerm: params.term
+        //             };
+        //         },
+        //         processResults: function(response) {
+        //             return {
+        //                 results: response
+        //             };
+        //         },
+        //         cache: true
+        //     }
+        // });
+    });
 </script>
+
 </html>
-<?php
-require "connection.php";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $ten_tgia = trim($_POST["ten_tgia"]);
-    $hinh_tgia = trim($_POST["hinh_tgia"]);
-    if (empty($ten_tgia)) {
-        echo "<scrip>alearn('Ban chua nhap du noi dung')</scrip>";
-    } else {
-        $sql = "INSERT INTO tacgia(ma_tgia,ten_tgia,hinh_tgia) VALUES('','$ten_tgia','$hinh_tgia')";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        header("location:author.php");
-    }
-}
-?>
