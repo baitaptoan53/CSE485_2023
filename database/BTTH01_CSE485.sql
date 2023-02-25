@@ -70,7 +70,7 @@ CREATE TABLE `theloai` (
 
 CREATE TABLE `users` (
   `user_id` int(5) NOT NULL,
-  `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `level` int(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
