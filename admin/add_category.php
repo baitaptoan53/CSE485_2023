@@ -84,8 +84,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         echo "Vui lòng nhập tên thể loại";
     }else{
         $sql = "INSERT INTO theloai(ma_tloai,ten_tloai) VALUES('','$ten_tloai')";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
+        $result = mysqli_query($conn,$sql);
         header("location: category.php");
     }
 }

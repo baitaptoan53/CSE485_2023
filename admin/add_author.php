@@ -85,8 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Vui lòng nhập tên tác giả";
     } else {
         $sql = "INSERT INTO tacgia(ma_tgia,ten_tgia,hinh_tgia) VALUES('','$ten_tgia','$hinh_tgia')";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
+        $result = mysqli_query($conn, $sql);
         header("location:author.php");
     }
 }

@@ -11,18 +11,17 @@ $error_username = false;
         $password = $_POST['password'];
         // kiểm tra email đã tồn tại chưa
         $sql = "SELECT * FROM users WHERE email = '$email'";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        $count = $stmt->rowCount();
+        $stmt = mysqli_query($conn, $sql);
+        $count = mysqli_num_rows($stmt);
         if ($count > 0) {
             $error = true;
             $error_email = true;
         }
         // kiểm tra tên tài khoản đã tồn tại chưa
         $sql = "SELECT * FROM users WHERE usersname = '$usersname'";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        $count = $stmt->rowCount();
+        $stmt = mysqli_query($conn, $sql);
+        $count = mysqli_num_rows($stmt);
+
         if ($count > 0) {
             $error = true;
             $error_username = true;
@@ -30,8 +29,7 @@ $error_username = false;
         if ($error == false) {
             $password = password_hash($password, PASSWORD_DEFAULT);
             $sql = "INSERT INTO users (user_id,usersname, email, password) VALUES ('','$usersname', '$email', '$password')";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute();
+            $stmt = mysqli_query($conn, $sql);
             header("Location: login.php");
         }
     }

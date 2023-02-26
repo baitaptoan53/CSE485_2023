@@ -2,9 +2,8 @@
 <?php
 require 'connection.php';
 $sql = "SELECT * FROM tacgia";
-$statement = $pdo->query($sql);           // Execute
-$statement->setFetchMode(PDO::FETCH_OBJ); // Fetch mode
-$members   = $statement->fetchAll();      // Get data
+$result = mysqli_query($conn, $sql);
+$members = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -67,21 +66,19 @@ $members   = $statement->fetchAll();      // Get data
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            foreach ($members as $member) {
-                                echo "<tr>";
-                                echo "<th scope='row'>$member->ma_tgia</th>";
-                                echo "<td>$member->ten_tgia</td>";
-                                if ($member->hinh_tgia == null) {
-                                    echo "<td><img src='https://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=identicon' alt=''></td>";
-                                } else {
-                                    echo "<td><img src='$member->hinh_tgia' alt=''></td>";
-                                }
-                                echo "<td><a href='edit_author.php?id=$member->ma_tgia' class='btn btn-primary'><i class='fas fa-edit'></i></a></td>";
-                                echo "<td><a href='delete_author.php?id=$member->ma_tgia' class='btn btn-danger'><i class='fas fa-trash-alt'></i></a></td>";
-                                echo "</tr>";
-                            }
-                        ?>
+                        <?php foreach ($members as $member): ?>
+                        <tr>
+                            <th scope="row"><?php echo $member['ma_tgia'] ?></th>
+                            <td><?php echo $member['ten_tgia'] ?></td>
+                            <?php if ($member['hinh_tgia'] == ''): ?>
+                            <td><img src="../images/author/default.jpg" alt="" width="100px"></td>
+                            <?php else: ?>
+                            <td><img src="images/author/<?php echo $member['hinh_tgia'] ?>" alt="" width="100px"></td>
+                            <?php endif; ?>
+                            <td><a href="edit_author.php?id=<?php echo $member['ma_tgia'] ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="delete_author.php?id=<?php echo $member['ma_tgia'] ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+                        </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
