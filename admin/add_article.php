@@ -1,10 +1,3 @@
-
-<?php
-require 'connection.php';
-$select_ten_bhat = "SELECT ten_bhat FROM baiviet";
-$stmt = $pdo->query($select_ten_bhat);
-$ten_bhat = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +9,10 @@ $ten_bhat = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style_login.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css' rel='stylesheet' type='text/css'>
+    <!-- Script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js'></script>
 </head>
 
 <body>
@@ -41,38 +37,57 @@ $ten_bhat = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <a class="nav-link " href="category.php">Thể loại</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active fw-bold" href="author.php">Tác giả</a>
+                            <a class="nav-link " href="author.php">Tác giả</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="article.php">Bài viết</a>
+                            <a class="nav-link active fw-bold" href="article.php">Bài viết</a>
                         </li>
                     </ul>
         </nav>
 
     </header>
     <main class="container mt-5 mb-5">
-        <!-- <h3 class="text-center text-uppercase mb-3 text-primary">CẢM NHẬN VỀ BÀI HÁT</h3> -->
-
-        <form action="add_article.php"  method=POST>
+        <form action="" method=POST>
             <div class="row">
                 <div class="col-sm">
                     <h3 class="text-center text-uppercase fw-bold">Thêm tác giả mới</h3>
                     <form action="process_add_category.php" method="post">
                         <div class="input-group mt-3 mb-3">
-                            <span class="input-group-text" id="lblCatName">Tên tác giả</span>
-                            <input type="text" class="form-control" name="ten_tgia">
+                            <span class="input-group-text" id="tieude">Tiêu đề</span>
+                            <input type="text" class="form-control" name="tieude">
                         </div>
                         <div class="input-group mt-3 mb-3">
-                            <span class="input-group-text" id="lblCatName">Hình ảnh</span>
-                            <input type="text" class="form-control" name="hinh_tgia">
+                            <span class="input-group-text" id="ten_bhat">Tên bài hát</span>
+                            <input type="text" class="form-control" name="ten_bhat">
                         </div>
-                        <select class="form-control select_ten_bhat">
-                                     <?php
-                                     foreach ($ten_bhat as $ten_bhat) {
-                                                         echo "<option value='" . $ten_bhat['ten_bhat'] . "'>" . $ten_bhat['ten_bhat'] . "</option>";
-                                     }
-                                     ?>
-</select>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text">Tên thể loại</span>
+                            <select id='ten_tloai' style="width:250px" name="ten_tloai">
+                                <option value='0'>Chọn tên thể loại</option>
+                            </select>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text" id="tomtat">Tóm tắt</span>
+                            <input type="text" class="form-control" name="tomtat">
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text" id="noidung">Nội dung</span>
+                            <input type="text" class="form-control" name="noidung">
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text">Tên tác giả</span>
+                            <select id='ten_tgia' style="width:250px" name="ten_tgia">
+                                <option value='0'>Chọn tên tác giả</option>
+                            </select>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text" id="ngayviet">Ngày viết</span>
+                            <input name="ngayviet" type="datetime-local" id="myDatetimeField" style="border : 1px solid var(--bs-border-color)" />
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text" id="hinhanh">Hình ảnh</span>
+                            <input type="file" class="form-control" name="hinhanh">
+                        </div>
                         <div class="form-group  float-end ">
                             <input type="submit" value="Thêm" class="btn btn-success">
                             <a href="category.php" class="btn btn-warning ">Quay lại</a>
@@ -90,23 +105,79 @@ $ten_bhat = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </body>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-                   $(".select_ten_bhat").select2({
-  tags: true
-});
+    $(document).ready(function() {
+
+        $("#ten_tgia").select2({
+            ajax: {
+                url: "get_ten_tgia.php",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        searchTerm: params.term // search term
+                    };
+                },
+                processResults: function(response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
+        });
+        $("#ten_tloai").select2({
+            ajax: {
+                url: "get_ten_tloai.php",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        searchTerm: params.term // search term
+                    };
+                },
+                processResults: function(response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
+        });
+        window.addEventListener("load", function() {
+            var now = new Date();
+            var offset = now.getTimezoneOffset() * 60000;
+            var adjustedDate = new Date(now.getTime() - offset);
+            var formattedDate = adjustedDate.toISOString().substring(0, 16); // For minute precision
+            var datetimeField = document.getElementById("myDatetimeField");
+            datetimeField.value = formattedDate;
+        });
+
+    });
 </script>
+
 </html>
 <?php
-require "connection.php";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $ten_tgia = trim($_POST["ten_tgia"]);
-    $hinh_tgia = trim($_POST["hinh_tgia"]);
-    if (empty($ten_tgia)) {
-        echo "<scrip>alearn('Ban chua nhap du noi dung')</scrip>";
+$check = false;
+require 'connection.php';
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tieude']) && isset($_POST['ten_bhat']) && isset($_POST['ten_tloai']) && isset($_POST['tomtat']) && isset($_POST['noidung']) && isset($_POST['ten_tgia']) && isset($_POST['ngayviet'])) {
+    $tieude = $_POST['tieude'];
+    $ten_bhat = $_POST['ten_bhat'];
+    $ten_tloai = $_POST['ten_tloai'];
+    $tomtat = $_POST['tomtat'];
+    $noidung = $_POST['noidung'];
+    $ten_tgia = $_POST['ten_tgia'];
+    $ngayviet = $_POST['ngayviet'];
+    $hinhanh = $_POST['hinhanh'];
+    $sql = "INSERT INTO baiviet (ma_bviet,tieude, ten_bhat, ma_tloai, tomtat, noidung, ma_tgia, ngayviet, hinhanh) VALUES ('','$tieude', '$ten_bhat', '$ten_tloai', '$tomtat', '$noidung', '$ten_tgia', '$ngayviet', '$hinhanh')";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $check = true;
+    if ($check) {
+        echo "<script>alert('Thêm thành công')</script>";
     } else {
-        $sql = "INSERT INTO tacgia(ma_tgia,ten_tgia,hinh_tgia) VALUES('','$ten_tgia','$hinh_tgia')";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        header("location:author.php");
+        echo "<script>alert('Thêm thất bại')</script>";
     }
 }
 ?>

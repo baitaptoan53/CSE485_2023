@@ -1,3 +1,42 @@
+<?php
+$error_email = false;
+$error_username = false;
+?>
+ <?php
+    require "admin/connection.php";
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['usersname']) && isset($_POST['emailaddress']) && isset($_POST['password'])) {
+        $error = false;
+        $usersname = $_POST['usersname'];
+        $email = $_POST['emailaddress'];
+        $password = $_POST['password'];
+        // kiểm tra email đã tồn tại chưa
+        $sql = "SELECT * FROM users WHERE email = '$email'";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        if ($count > 0) {
+            $error = true;
+            $error_email = true;
+        }
+        // kiểm tra tên tài khoản đã tồn tại chưa
+        $sql = "SELECT * FROM users WHERE usersname = '$usersname'";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        if ($count > 0) {
+            $error = true;
+            $error_username = true;
+        }
+        if ($error == false) {
+            $password = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO users (user_id,usersname, email, password) VALUES ('','$usersname', '$email', '$password')";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            header("Location: login.php");
+        }
+    }
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +52,6 @@
 </head>
 
 <body class="authentication-bg pb-0" data-layout-config='{"darkMode":false}'>
-
     <div class="auth-fluid">
         <!--Auth fluid left content -->
         <div class="auth-fluid-form-box">
@@ -21,29 +59,39 @@
                 <div class="card-body">
                     <!-- Logo -->
                     <div class="auth-brand text-center text-lg-left">
-                        <a href="index.html" class="logo-dark">
+                        <a href="index.php" class="logo-dark">
                             <span><img src="images/logo.png" alt="" height="24"></span>
-
                         </a>
                     </div>
-
                     <!-- title-->
                     <h4 class="mt-0">Đăng kí miễn phí</h4>
                     <p class="text-muted mb-4">
                         Bạn chưa có tài khoản? Tạo tài khoản của bạn, chỉ mất chưa đầy một phút</p>
                     <!-- form -->
-                    <form action="#">
+                    <form action="" method="POST">
                         <div class="form-group">
                             <label for="fullname">Tên tài khoản</label>
-                            <input class="form-control" type="text" id="usersname" placeholder="Nhập tên tài khoản" required>
+                            <input class="form-control" type="text" id="usersname" name="usersname" placeholder="Nhập tên tài khoản" required>
+                            <?php
+                            if ($error_username == true) {
+                                echo '<div class="alert alert-danger" role="alert">
+                                 Tên tài khoản bạn vừa nhập đã tồn tại!
+                               </div>';
+                            }
+                            ?>
                         </div>
                         <div class="form-group">
                             <label for="emailaddress">Email</label>
-                            <input class="form-control" type="email" id="emailaddress" required placeholder="Nhập email email">
+                            <input class="form-control" type="email" id="emailaddress" name="emailaddress" required placeholder="Nhập email email">
+                            <?php
+                            if ($error_email == true) {
+                                echo '<div class="alert alert-danger" role="alert"> Email bạn vừa nhập đã tồn tại!</div>';
+                            }
+                            ?>
                         </div>
                         <div class="form-group">
                             <label for="password">Mật khẩu</label>
-                            <input class="form-control" type="password" required id="password" placeholder="Nhập mật khẩu">
+                            <input class="form-control" type="password" required id="password" name="password" placeholder="Nhập mật khẩu">
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
@@ -54,6 +102,7 @@
                         <div class="form-group mb-0 text-center">
                             <button class="btn btn-primary btn-block" type="submit"><i class="mdi mdi-account-circle"></i> Đăng kí </button>
                         </div>
+
                         <!-- social-->
                         <div class="text-center mt-4">
                             <p class="text-muted font-16">Đăng kí với</p>
@@ -99,8 +148,7 @@
         <!-- end Auth fluid right content -->
     </div>
     <!-- end auth-fluid-->
-
-
 </body>
+
 
 </html>

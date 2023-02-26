@@ -14358,7 +14358,7 @@ body.authentication-bg {
     -webkit-box-align: stretch;
     -ms-flex-align: stretch;
     align-items: stretch;
-    background: url(../images/bgr_auth/block-01-bg.jpg) center;
+    background: url('../images/bgr_auth/block-01-bg.jpg') center;
     background-size: cover
 }
 
