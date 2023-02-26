@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,39 +37,57 @@
                             <a class="nav-link " href="category.php">Thể loại</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active fw-bold" href="author.php">Tác giả</a>
+                            <a class="nav-link " href="author.php">Tác giả</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="article.php">Bài viết</a>
+                            <a class="nav-link active fw-bold" href="article.php">Bài viết</a>
                         </li>
                     </ul>
         </nav>
 
     </header>
     <main class="container mt-5 mb-5">
-        <!-- <h3 class="text-center text-uppercase mb-3 text-primary">CẢM NHẬN VỀ BÀI HÁT</h3> -->
-
-        <form action="add_article.php" method=POST>
+        <form action="" method=POST>
             <div class="row">
                 <div class="col-sm">
                     <h3 class="text-center text-uppercase fw-bold">Thêm tác giả mới</h3>
                     <form action="process_add_category.php" method="post">
                         <div class="input-group mt-3 mb-3">
-                            <span class="input-group-text" id="lblCatName">Tên tác giả</span>
-                            <input type="text" class="form-control" name="ten_tgia">
+                            <span class="input-group-text" id="tieude">Tiêu đề</span>
+                            <input type="text" class="form-control" name="tieude">
                         </div>
                         <div class="input-group mt-3 mb-3">
-                            <span class="input-group-text" id="lblCatName">Hình ảnh</span>
-                            <input type="text" class="form-control" name="hinh_tgia">
+                            <span class="input-group-text" id="ten_bhat">Tên bài hát</span>
+                            <input type="text" class="form-control" name="ten_bhat">
                         </div>
-                        <label for="portLoading">Port Loading</label>
-                        <select class="form-control" id="portLoading" name="portLoading" style="width: 100%;">
-                            <option value="">Select Port Loading</option>
-                        </select>
-                        <label for="portLoading">Tên thể loại</label>
-                        <select class="form-control" id="ten_tloai" name="ten_tloai" style="width: 100%;">
-                            <option value="">Select tên thể loại</option>
-                        </select>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text">Tên thể loại</span>
+                            <select id='ten_tloai' style="width:250px" name="ten_tloai">
+                                <option value='0'>Chọn tên thể loại</option>
+                            </select>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text" id="tomtat">Tóm tắt</span>
+                            <input type="text" class="form-control" name="tomtat">
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text" id="noidung">Nội dung</span>
+                            <input type="text" class="form-control" name="noidung">
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text">Tên tác giả</span>
+                            <select id='ten_tgia' style="width:250px" name="ten_tgia">
+                                <option value='0'>Chọn tên tác giả</option>
+                            </select>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text" id="ngayviet">Ngày viết</span>
+                            <input name="ngayviet" type="datetime-local" id="myDatetimeField" style="border : 1px solid var(--bs-border-color)"/>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <span class="input-group-text" id="hinhanh">Hình ảnh</span>
+                            <input type="file" class="form-control" name="hinhanh">
+                        </div>
                         <div class="form-group  float-end ">
                             <input type="submit" value="Thêm" class="btn btn-success">
                             <a href="category.php" class="btn btn-warning ">Quay lại</a>
@@ -89,15 +106,16 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
-        $("#portLoading").select2({
+
+        $("#ten_tgia").select2({
             ajax: {
-                url: "get_data.php",
-                type: "get",
+                url: "get_ten_tgia.php",
+                type: "post",
                 dataType: 'json',
                 delay: 250,
                 data: function(params) {
                     return {
-                        searchTerm: params.term
+                        searchTerm: params.term // search term
                     };
                 },
                 processResults: function(response) {
@@ -108,26 +126,71 @@
                 cache: true
             }
         });
-        // $("#ten_tloai").select2({
-        //     ajax: {
-        //         url: "get_ten_tloai.php",
-        //         type: "get",
-        //         dataType: 'json',
-        //         delay: 250,
-        //         data: function(params) {
-        //             return {
-        //                 searchTerm: params.term
-        //             };
-        //         },
-        //         processResults: function(response) {
-        //             return {
-        //                 results: response
-        //             };
-        //         },
-        //         cache: true
-        //     }
-        // });
+        $("#ten_tloai").select2({
+            ajax: {
+                url: "get_ten_tloai.php",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        searchTerm: params.term // search term
+                    };
+                },
+                processResults: function(response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
+        });
+        window.addEventListener("load", function() {
+    var now = new Date();
+    var offset = now.getTimezoneOffset() * 60000;
+    var adjustedDate = new Date(now.getTime() - offset);
+    var formattedDate = adjustedDate.toISOString().substring(0,16); // For minute precision
+    var datetimeField = document.getElementById("myDatetimeField");
+    datetimeField.value = formattedDate;
+});
+
     });
 </script>
 
 </html>
+<?php
+$check = false;
+require 'connection.php';
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tieude']) && isset($_POST['ten_bhat']) && isset($_POST['ten_tloai']) && isset($_POST['tomtat']) && isset($_POST['noidung']) && isset($_POST['ten_tgia']) && isset($_POST['ngayviet'])) {
+    $tieude = $_POST['tieude'];
+    $ten_bhat = $_POST['ten_bhat'];
+    $ten_tloai = $_POST['ten_tloai'];
+    $tomtat = $_POST['tomtat'];
+    $noidung = $_POST['noidung'];
+    $ten_tgia = $_POST['ten_tgia'];
+    $ngayviet = $_POST['ngayviet'];
+    $hinhanh = $_POST['hinhanh'];
+    // //lấy mã thể loại
+    // var_dump($ten_tloai);
+    // $sql_ma_tloai = "SELECT ma_tloai FROM theloai WHERE ten_tloai = '$ten_tloai'";
+    // $result_ma_tloai = $pdo->query($sql_ma_tloai);
+    // $row_ma_tloai = $result_ma_tloai->fetch();
+    // $ma_tloai = $row_ma_tloai['ma_tloai'];
+    // var_dump($ma_tloai);
+    // //lấy mã tác giả
+    // $sql_ma_tgia = "SELECT ma_tgia FROM tacgia WHERE ten_tgia = '$ten_tgia'";
+    // $result_ma_tgia = $pdo->query($sql_ma_tgia);
+    // $row_ma_tgia = $result_ma_tgia->fetch();
+    // $ma_tgia = $row_ma_tgia['ma_tgia'];
+    $sql = "INSERT INTO baiviet (ma_bviet,tieude, ten_bhat, ma_tloai, tomtat, noidung, ma_tgia, ngayviet, hinhanh) VALUES ('','$tieude', '$ten_bhat', '$ten_tloai', '$tomtat', '$noidung', '$ten_tgia', '$ngayviet', '$hinhanh')";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $check = true;
+    if ($check) {
+        echo "<script>alert('Thêm thành công')</script>";
+    }
+    else {
+        echo "<script>alert('Thêm thất bại')</script>";
+    }   
+}
+?>
