@@ -1,18 +1,13 @@
 <?php
-require 'connection.php';
+include 'connection.php';
 $sql_count_user = "SELECT COUNT(*) FROM users";
 $sql_count_theloai = "SELECT COUNT(*) FROM theloai";
 $sql_count_tacgia = "SELECT COUNT(*) FROM tacgia";
 $sql_count_baiviet = "SELECT COUNT(*) FROM baiviet";
-
-$stmt_count_user = $pdo->prepare($sql_count_user);
-$stmt_count_theloai = $pdo->prepare($sql_count_theloai);
-$stmt_count_tacgia = $pdo->prepare($sql_count_tacgia);
-$stmt_count_baiviet = $pdo->prepare($sql_count_baiviet);
-$sql_count_user = "SELECT COUNT(*) FROM users";
-$sql_count_theloai = "SELECT COUNT(*) FROM theloai";
-$sql_count_tacgia = "SELECT COUNT(*) FROM tacgia";
-$sql_count_baihat = "SELECT COUNT(*) FROM baiviet";
+$result_count_user = mysqli_query($conn, $sql_count_user);
+$result_count_theloai = mysqli_query($conn, $sql_count_theloai);
+$result_count_tacgia = mysqli_query($conn, $sql_count_tacgia);
+$result_count_baiviet = mysqli_query($conn, $sql_count_baiviet);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,12 +65,9 @@ $sql_count_baihat = "SELECT COUNT(*) FROM baiviet";
                         <h5 class="card-title text-center">
                             <a href="" class="text-decoration-none">Người dùng</a>
                         </h5>
-
                         <h5 class="h1 text-center">
-                            <?php
-                            $stmt_count_user->execute();
-                            $count_user = $stmt_count_user->fetchColumn();
-                            echo $count_user;
+                            <?php 
+                            echo(mysqli_fetch_array($result_count_user)[0]);
                             ?>
                     </div>
                 </div>
@@ -89,12 +81,7 @@ $sql_count_baihat = "SELECT COUNT(*) FROM baiviet";
                         </h5>
 
                         <h5 class="h1 text-center">
-
-                            <?php
-                            $stmt_count_theloai->execute();
-                            $count_theloai = $stmt_count_theloai->fetchColumn();
-                            echo $count_theloai;
-                            ?>
+                            <?php echo mysqli_fetch_array($result_count_theloai)[0] ?>
                         </h5>
                     </div>
                 </div>
@@ -109,8 +96,7 @@ $sql_count_baihat = "SELECT COUNT(*) FROM baiviet";
 
                         <h5 class="h1 text-center">
                             <?php
-                            $stmt_count_tacgia->execute();
-                            $count_tacgia = $stmt_count_tacgia->fetchColumn();
+                            $count_tacgia = mysqli_fetch_array($result_count_tacgia)[0];
                             echo $count_tacgia;
                             ?>
                         </h5>
@@ -127,8 +113,7 @@ $sql_count_baihat = "SELECT COUNT(*) FROM baiviet";
 
                         <h5 class="h1 text-center">
                             <?php
-                            $stmt_count_baiviet->execute();
-                            $count_baiviet = $stmt_count_baiviet->fetchColumn();
+                            $count_baiviet = mysqli_fetch_array($result_count_baiviet)[0];
                             echo $count_baiviet;
                             ?>
                     </div>

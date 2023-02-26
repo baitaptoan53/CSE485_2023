@@ -171,8 +171,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tieude']) && isset($_P
     $ngayviet = $_POST['ngayviet'];
     $hinhanh = $_POST['hinhanh'];
     $sql = "INSERT INTO baiviet (ma_bviet,tieude, ten_bhat, ma_tloai, tomtat, noidung, ma_tgia, ngayviet, hinhanh) VALUES ('','$tieude', '$ten_bhat', '$ten_tloai', '$tomtat', '$noidung', '$ten_tgia', '$ngayviet', '$hinhanh')";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    $result = mysqli_query($conn, $sql);
     $check = true;
     if ($check) {
         echo "<script>alert('Thêm thành công')</script>";

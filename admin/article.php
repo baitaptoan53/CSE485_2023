@@ -1,9 +1,8 @@
 <?php
 require "connection.php";
 $sql       = "SELECT * FROM baiviet";
-$statement = $pdo->query($sql); // Execute
-$statement->setFetchMode(PDO::FETCH_OBJ); // Fetch mode
-$members = $statement->fetchAll();
+$result = mysqli_query($conn, $sql);
+$members = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -73,28 +72,20 @@ $members = $statement->fetchAll();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        ob_start();
-                        foreach ($members as $member) {
-                            echo "<tr>";
-                            echo "<th scope='row'>$member->ma_bviet</th>";
-                            echo "<th scope='row'>$member->tieude</th>";
-                            echo "<td>$member->ten_bhat</td>";
-                            echo "<td>$member->ma_tloai</td>";
-                            echo "<td>$member->tomtat</td>";
-                            echo "<td>$member->noidung</td>";
-                            echo "<td>$member->ma_tgia</td>";
-                            if ($member->hinhanh==null) {
-                                echo "<td><img src='https://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=identicon' alt=''></td>";
-                            } else {
-                                echo "<td><img src='$member->hinhanh' alt=''></td>";
-                            }
-                            echo "<td><a href='edit_article.php?id=$member->ma_bviet' class='btn btn-primary'><i class='fas fa-edit'></i></a></td>";
-                            echo "<td><a href='delete_article.php?id=$member->ma_bviet' class='btn btn-danger'><i class='fas fa-trash-alt'></i></a></td>";
-                            echo "</tr>";
-                        }
-                        ob_end_flush();
-                        ?>
+                        <?php foreach ($members as $member) : ?>
+                            <tr>
+                                <th scope="row"><?php echo $member['ma_bviet'] ?></th>
+                                <td><?php echo $member['tieude'] ?></td>
+                                <td><?php echo $member['ten_bhat'] ?></td>
+                                <td><?php echo $member['ma_tloai'] ?></td>
+                                <td><?php echo $member['tomtat'] ?></td>
+                                <td><?php echo $member['noidung'] ?></td>
+                                <td><?php echo $member['ma_tgia'] ?></td>
+                                <td><?php echo $member['hinhanh'] ?></td>
+                                <td><a href="edit_article.php?id=<?php echo $member['ma_bviet'] ?>" class="btn btn-primary">Sửa</a></td>
+                                <td><a href="delete_article.php?id=<?php echo $member['ma_bviet'] ?>" class="btn btn-danger">Xóa</a></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

@@ -2,9 +2,8 @@
 <?php
 require 'connection.php';
 $sql = "SELECT * FROM theloai";
-$statement = $pdo->query($sql);           // Execute
-$statement->setFetchMode(PDO::FETCH_OBJ); // Fetch mode
-$members   = $statement->fetchAll();      // Get data
+$result = mysqli_query($conn, $sql);
+$members = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,16 +64,14 @@ $members   = $statement->fetchAll();      // Get data
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            foreach ($members as $member) {
-                                echo "<tr>";
-                                echo "<th scope='row'>$member->ma_tloai</th>";
-                                echo "<td>$member->ten_tloai</td>";
-                                echo "<td><a href='edit_category.php?id=$member->ma_tloai' class='btn btn-primary'><i class='fas fa-edit'></i></a></td>";
-                                echo "<td><a href='delete_category.php?id=$member->ma_tloai' class='btn btn-danger'><i class='fas fa-trash-alt'></i></a></td>";
-                                echo "</tr>";
-                            }
-                        ?>
+                        <?php foreach ($members as $member) : ?>
+                            <tr>
+                                <th scope="row"><?php echo $member['ma_tloai'] ?></th>
+                                <td><?php echo $member['ten_tloai'] ?></td>
+                                <td><a href="edit_category.php?id=<?php echo $member['ma_tloai'] ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
+                                <td><a href="delete_category.php?id=<?php echo $member['ma_tloai'] ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
