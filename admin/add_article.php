@@ -82,7 +82,7 @@
                         </div>
                         <div class="input-group mt-3 mb-3">
                             <span class="input-group-text" id="ngayviet">Ngày viết</span>
-                            <input name="ngayviet" type="datetime-local" id="myDatetimeField" style="border : 1px solid var(--bs-border-color)"/>
+                            <input name="ngayviet" type="datetime-local" id="myDatetimeField" style="border : 1px solid var(--bs-border-color)" />
                         </div>
                         <div class="input-group mt-3 mb-3">
                             <span class="input-group-text" id="hinhanh">Hình ảnh</span>
@@ -146,13 +146,13 @@
             }
         });
         window.addEventListener("load", function() {
-    var now = new Date();
-    var offset = now.getTimezoneOffset() * 60000;
-    var adjustedDate = new Date(now.getTime() - offset);
-    var formattedDate = adjustedDate.toISOString().substring(0,16); // For minute precision
-    var datetimeField = document.getElementById("myDatetimeField");
-    datetimeField.value = formattedDate;
-});
+            var now = new Date();
+            var offset = now.getTimezoneOffset() * 60000;
+            var adjustedDate = new Date(now.getTime() - offset);
+            var formattedDate = adjustedDate.toISOString().substring(0, 16); // For minute precision
+            var datetimeField = document.getElementById("myDatetimeField");
+            datetimeField.value = formattedDate;
+        });
 
     });
 </script>
@@ -170,27 +170,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tieude']) && isset($_P
     $ten_tgia = $_POST['ten_tgia'];
     $ngayviet = $_POST['ngayviet'];
     $hinhanh = $_POST['hinhanh'];
-    // //lấy mã thể loại
-    // var_dump($ten_tloai);
-    // $sql_ma_tloai = "SELECT ma_tloai FROM theloai WHERE ten_tloai = '$ten_tloai'";
-    // $result_ma_tloai = $pdo->query($sql_ma_tloai);
-    // $row_ma_tloai = $result_ma_tloai->fetch();
-    // $ma_tloai = $row_ma_tloai['ma_tloai'];
-    // var_dump($ma_tloai);
-    // //lấy mã tác giả
-    // $sql_ma_tgia = "SELECT ma_tgia FROM tacgia WHERE ten_tgia = '$ten_tgia'";
-    // $result_ma_tgia = $pdo->query($sql_ma_tgia);
-    // $row_ma_tgia = $result_ma_tgia->fetch();
-    // $ma_tgia = $row_ma_tgia['ma_tgia'];
     $sql = "INSERT INTO baiviet (ma_bviet,tieude, ten_bhat, ma_tloai, tomtat, noidung, ma_tgia, ngayviet, hinhanh) VALUES ('','$tieude', '$ten_bhat', '$ten_tloai', '$tomtat', '$noidung', '$ten_tgia', '$ngayviet', '$hinhanh')";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $check = true;
     if ($check) {
         echo "<script>alert('Thêm thành công')</script>";
-    }
-    else {
+    } else {
         echo "<script>alert('Thêm thất bại')</script>";
-    }   
+    }
 }
 ?>
