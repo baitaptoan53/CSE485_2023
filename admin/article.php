@@ -82,7 +82,7 @@ $members = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <td><?php echo $member['noidung'] ?></td>
                                 <td><?php echo $member['ma_tgia'] ?></td>
                                 <td><?php echo $member['hinhanh'] ?></td>
-                                <td><a href="edit_article.php?id=<?php echo $member['ma_bviet'] ?>" class="btn btn-primary">Sửa</a></td>
+                                <td><a href="edit_article.php?id=<?php echo $member['ma_bviet'] ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
                                 <td><a href="delete_article.php?id=<?php echo $member['ma_bviet'] ?>" class="btn btn-danger">Xóa</a></td>
                             </tr>
                         <?php endforeach; ?>
