@@ -31,17 +31,41 @@
                 <!-- title-->
                 <h4 class="mt-0">Đăng Nhập</h4>
                 <p class="text-muted mb-4">Nhập địa chỉ email và mật khẩu của bạn để truy cập tài khoản.</p>
+                <?php 
+                require_once("./admin/connection.php");
+                if($_SERVER['REQUEST_METHOD'] =='POST'){
+                    if(isset($_POST['email'])&& isset($_POST['password'])){
+                        $email = trim($_POST['email']);
+                        $password = trim($_POST['password']);
+                        $sql = "SELECT * FROM users WHERE email = '$email'";
+                        $stmt = $conn->query($sql);
+                        $row = $stmt->fetch_assoc();
+                        if(password_verify($password,$row['password'])){
+                            echo'<script>
+                               var confirmMsg = confirm("Đăng nhập thành công","Thông báo");
+                               if(confirmMsg==true){
+                                window.location.href = "./admin/index.php";
+                               }else{
+                                window.location.href = "login.php";
+                               }
+                            </script>';
 
+                        }else{
+                           echo "<script>alert('Đăng nhập thất bại')</script>";
+                        }
+                    }
+                }
+                ?>
                 <!-- form -->
-                <form action="#">
+                <form action="" method="post">
                     <div class="form-group">
                         <label for="emailaddress">Email</label>
-                        <input class="form-control" type="email" id="emailaddress" required="" placeholder="Nhập email">
+                        <input class="form-control" type="email" id="emailaddress" required="" placeholder="Nhập email" name="email">
                     </div>
                     <div class="form-group">
                         <a href="pages-recoverpw-2.html" class="text-muted float-right"><small>Bạn quên mật khẩu ?</small></a>
                         <label for="password">Mật khẩu</label>
-                        <input class="form-control" type="password" required="" id="password" placeholder="Nhập mật khẩu">
+                        <input class="form-control" type="password" required="" id="password" placeholder="Nhập mật khẩu" name="password">
                     </div>
                     <div class="form-group mb-3">
                         <div class="custom-control custom-checkbox">
@@ -50,7 +74,7 @@
                         </div>
                     </div>
                     <div class="form-group mb-0 text-center">
-                        <button class="btn btn-primary btn-block" type="submit"><i class="mdi mdi-login"></i> Log In </button>
+                        <button class="btn btn-primary btn-block" type="submit" name = "submit"><i class="mdi mdi-login"></i> Log In </button>
                     </div>
                     <!-- social-->
                     <div class="text-center mt-4">

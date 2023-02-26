@@ -6,10 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music for Life</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="css/app-creative.min.css" rel="stylesheet" type="text/css" id="light-style" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body class="authentication-bg pb-0" data-layout-config='{"darkMode":false}'>
@@ -31,44 +36,125 @@
                     <h4 class="mt-0">Đăng kí miễn phí</h4>
                     <p class="text-muted mb-4">
                         Bạn chưa có tài khoản? Tạo tài khoản của bạn, chỉ mất chưa đầy một phút</p>
+                        <?php
+                        require_once('./admin/connection.php');
+                        $a = new ALL();
+                        $isCheckUsername = true;
+                        $isCheckEmail = true;
+                        $isCheckPw = true;
+                        $isCheckLenPw = true;
+                        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                            if (isset($_POST['usersname']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confPassword'])) {
+                                $username = trim($_POST['usersname']);
+                                $email = $_POST['email'];
+                                $password = trim($_POST['password']);
+                                $confPassword = trim($_POST['confPassword']);
+
+                                $sql1 = "SELECT * FROM users WHERE usersname ='$username'";
+                                $stmt1 = $a->pdo->prepare($sql1);
+                                $stmt1->execute();
+                                $countName = $stmt1->rowCount();
+                                if ($countName >= 1) {
+                                    $isCheckUsername = false;
+                                    echo "<script>alert('Tên tài khoản đã tồn tại!!!')</script>";
+                                }
+
+                                $sql2 = "SELECT * FROM users WHERE email='$email'";
+                                $stmt2 = $a->pdo->prepare($sql2);
+                                $stmt2->execute();
+                                $countEmail = $stmt2->rowCount();
+                                if ($countEmail >= 1) {
+                                    $isCheckEmail = false;
+                                    echo "<script>alert('Email đã tồn tai!!!')</script>";
+                                }
+                                if (strlen($password) < 6) {
+                                    $isCheckLenPw = false;
+                                    echo "<script>alert('Mật khẩu lớn hơn 6 kí tự!!!')</script>";
+                                }
+                                if ($password !== $confPassword) {
+                                    $checkPw = false;
+                                    echo "<script>alert('Mật khẩu không trùng khớp!!!')</script>";
+                                }
+
+                                if ($isCheckEmail === true && $isCheckUsername === true && $isCheckLenPw === true && $isCheckPw === true) {
+                                    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+                                    echo $hashed_password;
+                                    $sql = "INSERT INTO users (email,usersname,password,level) VALUES('$email','$username','$hashed_password','')";
+                                    $stmt = $a->pdo->prepare($sql);
+                                    if ($stmt->execute()) {
+                                        if (isset($_POST['submit'])) {
+                                            echo '<script type="text/javascript">
+                                                var confirmMsg = confirm("Bạn có muốn đăng ký trước khi chuyển đến trang mới?","Thông báo");
+                                                if (confirmMsg == true) {
+                                                    window.location.href = "login.php";
+                                                } else {
+                                                    window.location.href = "register.php";
+                                                }
+                                                </script>';
+                                        }
+                                    } else {
+                                        echo "<script>alert('Đăng ký thất bại')</script>";
+                                    }
+                                }
+                            }
+                        }
+                        ?>
                     <!-- form -->
-                    <form action="#">
+                    <form action="" method="post">
+
                         <div class="form-group">
                             <label for="fullname">Tên tài khoản</label>
-                            <input class="form-control" type="text" id="usersname" placeholder="Nhập tên tài khoản" required>
+                            <input class="form-control" type="text" id="usersname" required
+                                placeholder="Nhập tên tài khoản" name="usersname">
                         </div>
                         <div class="form-group">
                             <label for="emailaddress">Email</label>
-                            <input class="form-control" type="email" id="emailaddress" required placeholder="Nhập email email">
+                            <input class="form-control" type="email" id="emailaddress" required
+                                placeholder="Nhập email email" name="email">
                         </div>
                         <div class="form-group">
                             <label for="password">Mật khẩu</label>
-                            <input class="form-control" type="password" required id="password" placeholder="Nhập mật khẩu">
+                            <input class="form-control" type="password" required id="password"
+                                placeholder="Nhập mật khẩu" name="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Nhập lại khẩu</label>
+                            <input class="form-control" type="password" required id="password"
+                                placeholder="Nhập lại mật khẩu" name="confPassword">
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="checkbox-signup">
-                                <label class="custom-control-label" for="checkbox-signup">Tôi chấp nhận <a href="javascript: void(0);" class="text-muted">Các điều khoản và điều kiện</a></label>
+                                <label class="custom-control-label" for="checkbox-signup">Tôi chấp nhận <a
+                                        href="javascript: void(0);" class="text-muted">Các điều khoản và điều
+                                        kiện</a></label>
                             </div>
                         </div>
                         <div class="form-group mb-0 text-center">
-                            <button class="btn btn-primary btn-block" type="submit"><i class="mdi mdi-account-circle"></i> Đăng kí </button>
+                            <button class="btn btn-primary btn-block" type="submit" name="submit"><i
+                                    class="mdi mdi-account-circle"></i> Đăng kí </button>
                         </div>
                         <!-- social-->
                         <div class="text-center mt-4">
                             <p class="text-muted font-16">Đăng kí với</p>
                             <ul class="social-list list-inline mt-3">
                                 <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i class="fa-brands fa-facebook"></i></i></a>
+                                    <a href="javascript: void(0);"
+                                        class="social-list-item border-primary text-primary"><i
+                                            class="fa-brands fa-facebook"></i></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="fa-brands fa-google"></i></a>
+                                    <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i
+                                            class="fa-brands fa-google"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="social-list-item border-info text-info"><i class="fa-brands fa-twitter"></i></a>
+                                    <a href="javascript: void(0);" class="social-list-item border-info text-info"><i
+                                            class="fa-brands fa-twitter"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="fa-brands fa-github"></i></a>
+                                    <a href="javascript: void(0);"
+                                        class="social-list-item border-secondary text-secondary"><i
+                                            class="fa-brands fa-github"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -77,7 +163,8 @@
 
                     <!-- Footer-->
                     <footer class="footer footer-alt">
-                        <p class="text-muted">Bạn đã có tài khoản? <a href="login.php" class="text-muted ml-1"><b>Đăng nhập</b></a></p>
+                        <p class="text-muted">Bạn đã có tài khoản? <a href="login.php" class="text-muted ml-1"><b>Đăng
+                                    nhập</b></a></p>
                     </footer>
 
                 </div> <!-- end .card-body -->
@@ -89,7 +176,8 @@
         <div class="auth-fluid-right text-center">
             <div class="auth-user-testimonial">
                 <h2 class="mb-3">Nghe nhạc online mễn phí</h2>
-                <p class="lead"><i class="mdi mdi-format-quote-open"></i>Không lo các quảng cáo giữa chừng làm chúng ta khó chịu .<i class="mdi mdi-format-quote-close"></i>
+                <p class="lead"><i class="mdi mdi-format-quote-open"></i>Không lo các quảng cáo giữa chừng làm chúng ta
+                    khó chịu .<i class="mdi mdi-format-quote-close"></i>
                 </p>
                 <p>
                     TLU'S MUSIC GARDEN
