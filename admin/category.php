@@ -68,7 +68,7 @@ $members = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <tr>
                                 <th scope="row"><?php echo $member['ma_tloai'] ?></th>
                                 <td><?php echo $member['ten_tloai'] ?></td>
-                                <td><a href="edit_category.php?id=<?php echo $member['ma_tloai'] ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
+                                <td><a href="edit_category.php?id=<?php echo $member['ma_tloai'] ?>&ten_tloai=<?php echo $member['ten_tloai'] ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
                                 <td><a href="delete_category.php?id=<?php echo $member['ma_tloai'] ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
                             </tr>
                         <?php endforeach; ?>

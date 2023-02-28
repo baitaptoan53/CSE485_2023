@@ -1,12 +1,3 @@
-<?php
-require 'connection.php';
-$id = $_GET['id'];
-$sql_ten_tgia = "SELECT tacgia FROM tacgia WHERE ma_tgia = $id";
-$stmt_ten_tloai = $pdo->prepare($sql_ten_tloai);
-$stmt_ten_tloai->execute();
-$ten_tloai = $stmt_ten_tloai->fetchColumn();
-$sql_update = "UPDATE theloai SET ten_tloai = ten_tloai WHERE ma_tloai = $id";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,26 +40,48 @@ $sql_update = "UPDATE theloai SET ten_tloai = ten_tloai WHERE ma_tloai = $id";
                 </div>
             </div>
         </nav>
-
     </header>
+    <?php 
+    require_once('connection.php');
+    $id = $ten_tgia ='';
+    if(isset($_GET['id'])&&isset($_GET['ten_tgia'])){
+        $id = $_GET['id'];
+        $ten_tgia = $_GET['ten_tgia'];
+    }
+    $hinh_tgia ='';
+    if(isset($_POST['txtCatId'])&&isset($_POST['txtCatName'])&&isset($_POST['txtCatImg'])){
+        $idUp = $_POST['txtCatId'];
+        $ten_tgiaUp = $_POST['txtCatName'];
+        $hinh_tgia = $_POST['txtCatImg'];
+        echo $ten_tgiaUp;
+        $sql = "UPDATE tacgia SET ten_tgia='$ten_tgiaUp', hinh_tgia='$hinh_tgia' WHERE ma_tgia='$idUp'";
+        echo $sql;
+        $stmt = mysqli_query($conn, $sql);
+        if($stmt){
+            header("location: author.php");
+            die();
+        }else{
+            echo "<script>alert('Xửa thất bai')</script>";
+        }
+    }
+    ?>
     <main class="container mt-5 mb-5">
         <div class="row">
             <div class="col-sm">
                 <h3 class="text-center text-uppercase fw-bold">Sửa thông tin tác giả</h3>
-                <form action="edit_category.php" method="post">
+                <form action="edit_author.php" method="post">
                 <div class="input-group mt-3 mb-3">
                         <span class="input-group-text" id="lblCatId">Mã tác giả</span>
-                        <input type="text" class="form-control" name="txtCatId" readonly  value="<?php echo $_GET['id']; 
-                        ?>">
+                        <input type="text" class="form-control" name="txtCatId" readonly  value="<?=$id?>">
                     </div>
 
                     <div class="input-group mt-3 mb-3">
                         <span class="input-group-text" id="lblCatName">Tên tác giả</span>
-                        <input type="text" class="form-control" name="txtCatName" value="<?php echo $ten_tloai ?>">
+                        <input type="text" class="form-control" name="txtCatName" value="<?=$ten_tgia?>">
                     </div>
                     <div class="input-group mt-3 mb-3">
                         <span class="input-group-text" id="lblCatName">Hình ảnh</span>
-                        <input type="text" class="form-control" name="txtCatName" value="<?php echo $ten_tloai ?>">
+                        <input type="text" class="form-control" name="txtCatImg" value="<?=$hinh_tgia?>">
                     </div>
                     <div class="form-group  float-end ">
                         <input type="submit" value="Lưu lại" class="btn btn-success">
@@ -84,12 +97,3 @@ $sql_update = "UPDATE theloai SET ten_tloai = ten_tloai WHERE ma_tloai = $id";
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>
-<?php
-if (isset($_POST['txtCatName'])) {
-    $ten_tloai = $_POST['txtCatName'];
-    $sql_update = "UPDATE theloai SET ten_tloai = '$ten_tloai' WHERE ma_tloai = $id";
-    $stmt_update = $pdo->prepare($sql_update);
-    $stmt_update->execute();
-    header('location: author.php');
-}
-?>

@@ -75,7 +75,7 @@ $members = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <?php else: ?>
                             <td><img src="images/author/<?php echo $member['hinh_tgia'] ?>" alt="" width="100px"></td>
                             <?php endif; ?>
-                            <td><a href="edit_author.php?id=<?php echo $member['ma_tgia'] ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="edit_author.php?id=<?php echo $member['ma_tgia'] ?>&ten_tgia=<?php echo $member['ten_tgia'] ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
                             <td><a href="delete_author.php?id=<?php echo $member['ma_tgia'] ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
                         </tr>
                         <?php endforeach; ?>
