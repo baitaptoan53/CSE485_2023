@@ -1,3 +1,17 @@
+<?php
+require "connection.php";
+if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST["ten_tgia"])) {
+    $ten_tgia = trim($_POST["ten_tgia"]);
+    $hinh_tgia = trim($_POST["hinh_tgia"]);
+    if (empty($ten_tgia)) {
+        echo "Vui long  nhap ten tac gia";
+    } else {
+        $sql = "INSERT INTO tacgia(ma_tgia,ten_tgia,hinh_tgia) VALUES('','$ten_tgia','$hinh_tgia')";
+        $result = mysqli_query($conn, $sql);
+        header("location: add_author.php");
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -72,18 +86,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
-
 </html>
-<?php
-require "connection.php";
-if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST["ten_tgia"])) {
-    $ten_tgia = trim($_POST["ten_tgia"]);
-    $hinh_tgia = trim($_POST["hinh_tgia"]);
-    if (empty($ten_tgia)) {
-        echo "Vui lòng nhập tên tác giả";
-    } else {
-        $sql = "INSERT INTO tacgia(ma_tgia,ten_tgia,hinh_tgia) VALUES('','$ten_tgia','$hinh_tgia')";
-        $result = mysqli_query($conn, $sql);
-        header("location: add_author.php");
-    }
-}   
