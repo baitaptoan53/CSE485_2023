@@ -96,7 +96,7 @@
                                <td>'.$row['ma_tgia'].'</td>
                                <td>'.$row['ngayviet'].'</td>
                                <td><img src="'.$img.'" alt=""></td>
-                               <td><a href="edit_article.php?id='.$row['ma_bviet'].'" class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
+                               <td><a href="edit_article.php?id='.$row['ma_bviet'].'&id2='.$row['ma_tloai'].'&id3='.$row['ma_tloai'].'" class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
                                <td><a href="delete_article.php?id='.$row['ma_bviet'].'" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
                                </tr>
                                ';

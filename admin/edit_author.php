@@ -51,11 +51,12 @@
     }
     $hinh_tgia ='';
     if(isset($_POST['txtCatId'])&&isset($_POST['txtCatName'])&&isset($_POST['txtCatImg'])){
-        $ten_tgia = $_POST['txtCatName'];
+        $idUp = $_POST['txtCatId'];
+        $ten_tgiaUp = $_POST['txtCatName'];
         $hinh_tgia = $_POST['txtCatImg'];
         $sql = "UPDATE tacgia SET ten_tgia=?, hinh_tgia=? WHERE ma_tgia=?";
         $stmt = $a->pdo->prepare($sql);
-        if($stmt->execute([$ten_tgia,$hinh_tgia,$id])){
+        if($stmt->execute([$ten_tgiaUp,$hinh_tgia,$idUp])){
             header("location: author.php");
             die();
         }else{

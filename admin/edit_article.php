@@ -56,7 +56,7 @@
     $id = '';
     $id2 = '';
     $id3 = '';
-    if (isset($_GET['id'])) {
+    if (isset($_GET['id'])&&isset($_GET['id2'])&&isset($_GET['id3'])) {
         $id = $_GET['id'];
         $id2 = $_GET['id2'];
         $id3 = $_GET['id3'];
